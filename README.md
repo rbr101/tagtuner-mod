@@ -13,7 +13,7 @@ BLK	    ->	TDI
 DC	    ->	I16
 RES	    ->	TCK
 SDA	    ->	IO4
-SCK/SCL	->	TMS
+SCK/SCL	    ->	TMS
 VCC	    ->	3.3V
 GND	    ->	GND
 ```
