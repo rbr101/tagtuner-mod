@@ -5,14 +5,15 @@ There is a esphome config part and a homeassistant blueprint to send information
 I used a small st7789v 240x240 screen, and it shows the currently playing artist/title and when you change the volume.
 I'm using a esp32 WROOM (https://www.hobbyelectronica.nl/wp-content/uploads/2021/11/D1_mini_esp32_schema.jpg)
 
-st7789v		esp32
+
 
 ```
-BLK	->	TDI
-DC	->	I16
-RES	->	TCK
-SDA	->	IO4
+st7789v		esp32
+BLK	    ->	TDI
+DC	    ->	I16
+RES	    ->	TCK
+SDA	    ->	IO4
 SCK/SCL	->	TMS
-VCC	->	3.3V
-GND	->	GND
+VCC	    ->	3.3V
+GND	    ->	GND
 ```
