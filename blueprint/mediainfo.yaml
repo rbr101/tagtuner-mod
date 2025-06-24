@@ -1,0 +1,61 @@
+blueprint:
+  name: "Media Player Song Change Action"
+  description: >
+    Sends the media_artist, media_title, and media_player to a defined action
+    whenever the media_title changes on the selected media_player.
+  domain: automation
+  input:
+    media_player:
+      name: "Media Player"
+      description: "The media player to monitor for song changes."
+      selector:
+        entity:
+          domain: media_player
+    title_change:
+      name: "Title Change"
+      description: >
+        The ESPHome service to call with media_artist, media_title, and media_player as data.
+      default: esphome.esphome_tagreader3_set_media_info
+    player_state:
+      name: "Player State"
+      description: >
+        The additional service to call for other triggers, such as state changes.
+      default: esphome.esphome_tagreader3_set_player_state
+
+trigger:
+  - platform: state
+    entity_id: !input media_player
+    attribute: media_title
+
+    # Trigger on any state change of the media_player
+  - platform: state
+    entity_id: !input media_player
+
+condition: []
+
+action:
+  # First service call for media_title changes
+  - choose:
+      - conditions:
+          # When the trigger is related to a change in media_title
+          - condition: template
+            value_template: '{{ trigger.attribute == "media_title" }}'
+        sequence:
+          - service: !input title_change
+            data:
+              artist: '{{ trigger.to_state.attributes.media_artist }}'
+              title: '{{ trigger.to_state.attributes.media_title }}'
+              album: '{{ trigger.to_state.attributes.media_album_name }}'
+
+  # Second service call for other state changes
+  - choose:
+      - conditions:
+          # When the trigger is due to a general state change
+          - condition: template
+            value_template: '{{ trigger.attribute is none }}'
+        sequence:
+          - service: !input player_state
+            data:
+              state: '{{ trigger.to_state.state }}'
+              player: !input media_player
+              volume: '{{ trigger.to_state.attributes.volume_level }}'
