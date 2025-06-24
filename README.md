@@ -7,6 +7,7 @@ I'm using a esp32 WROOM (https://www.hobbyelectronica.nl/wp-content/uploads/2021
 
 st7789v		esp32
 
+```
 BLK	->	TDI
 DC	->	I16
 RES	->	TCK
@@ -14,3 +15,4 @@ SDA	->	IO4
 SCK/SCL	->	TMS
 VCC	->	3.3V
 GND	->	GND
+```
